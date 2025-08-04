@@ -1,9 +1,26 @@
 {% extends "base/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block extra_css %}
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <h2>Registrarse</h2>
-<form method="post">
+<form class="form" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Registrarse</button>
+    <span class="input-span">
+        <label for="{{ form.username.id_for_label }}" class="label">Usuario</label>
+        {{ form.username|add_class:"user" }}
+    </span>
+    <span class="input-span">
+        <label for="{{ form.password1.id_for_label }}" class="label">Contraseña</label>
+        {{ form.password1|add_class:"password" }}
+    </span>
+    <span class="input-span">
+        <label for="{{ form.password2.id_for_label }}" class="label">Confirmar contraseña</label>
+        {{ form.password2|add_class:"password" }}
+    </span>
+    <input class="submit" type="submit" value="Registrarse" />
 </form>
 {% endblock %}

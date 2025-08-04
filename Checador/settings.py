@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'Checks.apps.ChecksConfig',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -121,7 +122,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+
+# Define donde Django debe buscar archivos estáticos
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# Directorio donde se recopilarán todos los archivos estáticos en producción
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
