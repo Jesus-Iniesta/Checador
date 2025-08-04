@@ -4,8 +4,11 @@
     <h2>Checador</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrar Entrada/Salida</button>
+        {% if session %}
+            <button type="submit" onclick="return confirm('¿Estás Seguro de registar la salida?');">Registrar salida</button>
+        {% else %}
+            <button type="submit">Registrar entrada</button>
+        {% endif %}
     </form>
 
     {% if checador %}
@@ -15,15 +18,17 @@
                 <tr>
                     <th>Fecha y Hora</th>
                     <th>Tipo</th>
+                    <th>Duración</th>
                 </tr>
             </thead>
             <tbody>
-                {% for entry in checador %}
-                    <tr>
-                        <td>{{ entry.fecha_hora }}</td>
-                        <td>{{ entry.tipo }}</td>
-                    </tr>
-                {% endfor %}
+                {% for s in sessions %}
+                <tr>
+                    <td>{{ s.start_time }}</td>
+                    <td>{{ s.end_time|default:"-" }}</td>
+                    <td>{{ s.duration|default:"-" }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     {% endif %}

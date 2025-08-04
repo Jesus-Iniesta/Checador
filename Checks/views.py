@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from Checks.models import WorkSession
+from django.utils import timezone
 
 def register(request):
     """
@@ -20,4 +22,22 @@ def home(request):
     """
     Render the home page.
     """
-    return render(request, 'Checador/check_tablero.html')
+    #Buscar si hay una sesión abierta (sin registro de salida)
+    session = WorkSession.objects.filter(user=request.user, end_time__isnull=True).first()
+
+    if request.method == "POST":
+        if session:
+            #registrar salida
+            session.end_time = timezone.now()
+            session.save()
+        else:
+            #Registrar entrada
+            WorkSession.objects.create(user=request.user, start_time=timezone.now())
+        return redirect('Checks:home')
+    #Historiall de sesiones
+    sessions = WorkSession.objects.filter(user=request.user).order_by('-start_time')
+
+    return render(request, 'Checador/check_tablero.html',{
+        'session': session,
+        'sessions': sessions
+    })

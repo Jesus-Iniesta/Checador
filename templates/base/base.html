@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Checking{% endblock %}</title>
@@ -11,8 +11,9 @@
 </head>
 <body>
     <header>
-        <nav>
-            <a href="{% url 'Checks:home' %}">Inicio</a>
+        <nav class="nav">
+        <div class="container">
+            <a class="btn" href="{% url 'Checks:home' %}">Inicio</a>
             {% if user.is_authenticated %}
                 <span>Hola, {{ user.username }}</span>
                 <form action="{% url 'Checks:logout' %}" method="post" style="display:inline;">
@@ -23,6 +24,7 @@
                 <a href="{% url 'Checks:login' %}">Iniciar sesión</a>
                 <a href="{% url 'Checks:register' %}">Registrarse</a>
             {% endif %}
+        </div>
         </nav>
     </header>
 
