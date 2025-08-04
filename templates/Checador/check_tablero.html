@@ -1,0 +1,30 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+    <h2>Checador</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrar Entrada/Salida</button>
+    </form>
+
+    {% if checador %}
+        <h3>Historial de Checadas</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha y Hora</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in checador %}
+                    <tr>
+                        <td>{{ entry.fecha_hora }}</td>
+                        <td>{{ entry.tipo }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
