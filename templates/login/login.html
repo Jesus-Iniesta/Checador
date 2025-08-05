@@ -7,19 +7,51 @@
     <link href="{% static 'css/login.css' %}" rel="stylesheet">
 {% endblock %}
 
-
 {% block content %}
-    <h2>Iniciar sesión</h2>
+<div class="form-container">
     <form class="form" method="post">
+        <h2 class="form-title">🔐 Iniciar Sesión</h2>
         {% csrf_token %}
-        <span class="input-span">
-            <label for="{{ form.username.id_for_label }}" class="label">Usuario</label>
-            {{ form.username|add_class:"user" }}
-        </span>
-    <span class="input-span">
-        <label for="{{ form.password.id_for_label }}" class="label">Contraseña</label>
-        {{ form.password|add_class:"password" }}
-    </span>
-    <input class="submit" type="submit" value="Iniciar sesión" />
+        
+        {% if form.non_field_errors %}
+            <ul class="errorlist">
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <div class="input-span">
+            <label for="{{ form.username.id_for_label }}" class="label">👤 Usuario</label>
+            {{ form.username|add_class:"user"|attr:"placeholder:Ingresa tu nombre de usuario" }}
+            {% if form.username.errors %}
+                <ul class="errorlist">
+                    {% for error in form.username.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        
+        <div class="input-span">
+            <label for="{{ form.password.id_for_label }}" class="label">🔒 Contraseña</label>
+            {{ form.password|add_class:"password"|attr:"placeholder:Ingresa tu contraseña" }}
+            {% if form.password.errors %}
+                <ul class="errorlist">
+                    {% for error in form.password.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        
+        <input class="submit" type="submit" value="🚀 Iniciar sesión" />
+        
+        <div class="form-footer">
+            <span class="span">¿No tienes cuenta? 
+                <a href="{% url 'Checks:register' %}" class="form-link">Regístrate aquí</a>
+            </span>
+        </div>
     </form>
+</div>
 {% endblock %}

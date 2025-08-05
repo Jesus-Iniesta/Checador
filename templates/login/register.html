@@ -1,26 +1,76 @@
 {% extends "base/base.html" %}
 {% load static %}
 {% load widget_tweaks %}
+
+{% block title %}Registrarse - Checking{% endblock %}
 {% block extra_css %}
     <link href="{% static 'css/login.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-<h2>Registrarse</h2>
-<form class="form" method="post">
-    {% csrf_token %}
-    <span class="input-span">
-        <label for="{{ form.username.id_for_label }}" class="label">Usuario</label>
-        {{ form.username|add_class:"user" }}
-    </span>
-    <span class="input-span">
-        <label for="{{ form.password1.id_for_label }}" class="label">Contraseña</label>
-        {{ form.password1|add_class:"password" }}
-    </span>
-    <span class="input-span">
-        <label for="{{ form.password2.id_for_label }}" class="label">Confirmar contraseña</label>
-        {{ form.password2|add_class:"password" }}
-    </span>
-    <input class="submit" type="submit" value="Registrarse" />
-</form>
+<div class="form-container">
+    <form class="form" method="post">
+        <h2 class="form-title">Crear Cuenta</h2>
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            <ul class="errorlist">
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <div class="input-span">
+            <label for="{{ form.username.id_for_label }}" class="label">👤 Usuario</label>
+            {{ form.username|add_class:"user"|attr:"placeholder:Elige un nombre de usuario único" }}
+            {% if form.username.errors %}
+                <ul class="errorlist">
+                    {% for error in form.username.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <small class="help-text">Requerido. 150 caracteres como máximo. Solo letras, dígitos y @/./+/-/_ .</small>
+        </div>
+        
+        <div class="input-span">
+            <label for="{{ form.password1.id_for_label }}" class="label">🔒 Contraseña</label>
+            {{ form.password1|add_class:"password"|attr:"placeholder:Crea una contraseña segura" }}
+            {% if form.password1.errors %}
+                <ul class="errorlist">
+                    {% for error in form.password1.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <small class="help-text">
+                • Tu contraseña debe tener al menos 8 caracteres.<br>
+                • No puede ser muy común o completamente numérica.<br>
+                • No debe ser muy similar a tu información personal.
+            </small>
+        </div>
+        
+        <div class="input-span">
+            <label for="{{ form.password2.id_for_label }}" class="label">🔐 Confirmar contraseña</label>
+            {{ form.password2|add_class:"password"|attr:"placeholder:Repite tu contraseña" }}
+            {% if form.password2.errors %}
+                <ul class="errorlist">
+                    {% for error in form.password2.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <small class="help-text">Ingresa la misma contraseña anterior para verificación.</small>
+        </div>
+        
+        <input class="submit" type="submit" value="🎉 Crear cuenta" />
+        
+        <div class="form-footer">
+            <span class="span">¿Ya tienes cuenta? 
+                <a href="{% url 'Checks:login' %}" class="form-link">Inicia sesión aquí</a>
+            </span>
+        </div>
+    </form>
+</div>
 {% endblock %}

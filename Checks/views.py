@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from Checks.models import WorkSession
 from django.utils import timezone
@@ -11,8 +13,15 @@ def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'¡Cuenta creada exitosamente para {username}! Ahora puedes iniciar sesión.')
+            # Opcional: Iniciar sesión automáticamente después del registro
+            # login(request, user)
+            # return redirect('Checks:home')
             return redirect('Checks:login')
+        else:
+            messages.error(request, 'Por favor corrige los errores en el formulario.')
     else:
         form = UserCreationForm()
     return render(request, 'login/register.html', {'form': form})
