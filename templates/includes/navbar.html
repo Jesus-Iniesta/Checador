@@ -1,0 +1,35 @@
+<nav class="nav">
+        <div class="container">
+            <a class="btn" href="{% url 'Checks:home' %}">Inicio</a>
+            {% if user.is_authenticated %}
+                <span>Hola, {{ user.username }}</span>
+                <form action="{% url 'Checks:logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="button" type="submit">
+                        <p>Cerrar Sesión</p>
+                    </button>
+                </form>
+            {% else %}
+                <a class="btn" href="{% url 'Checks:login' %}">Iniciar sesión</a>
+                <a class="btn" href="{% url 'Checks:register' %}">Registrarse</a>
+            {% endif %}
+            <svg
+              class="outline"
+              overflow="visible"
+              width="400"
+              height="60"
+              viewBox="0 0 400 60"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+            <rect
+            class="rect"
+            pathLength="100"
+            x="0"
+            y="0"
+            width="400"
+            height="60"
+            fill="transparent"
+            stroke-width="5"></rect>
+            </svg>
+        </div>
+</nav>

@@ -1,0 +1,131 @@
+.outline {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+
+.outline svg {
+  width: 100%;
+  height: 100%;
+}
+
+.outline .rect {
+  width: 100%;
+  height: 100%;
+}
+
+a{
+    text-decoration: none;
+    color: #fff;
+}
+
+.rect {
+  stroke-dashoffset: 5;
+  stroke-dasharray: 0 0 10 40 10 40;
+  transition: 0.5s;
+  stroke: #fff;
+}
+
+.nav {
+  position: relative;
+  width: 100%;
+  max-width: 100vw;
+  height: 60px;
+  margin: 0 auto;
+}
+
+.container:hover .outline .rect {
+  transition: 2s;
+  /* Must specify these values here as something *different* just so that the transition works properly */
+  stroke-dashoffset: 1;
+  stroke-dasharray: 0;
+}
+
+.container {
+  position: absolute;
+  inset: 0;
+  background: #bef6;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5em;
+}
+
+.btn {
+  padding: 0.5em 1.5em;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.submit{
+    text-decoration-color: black;
+
+}
+
+.btn:hover {
+  background: #fff3;
+}
+
+/* Efectos hover principales para los botones */
+.btn:nth-child(1):hover ~ svg .rect {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 0 8% 12% 65% 12% 3%;
+}
+
+.btn:nth-child(2):hover ~ svg .rect {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 0 30% 12% 43% 12% 3%;
+}
+
+.btn:nth-child(3):hover ~ svg .rect {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 0 52% 12% 31% 3% 2%;
+}
+
+.btn:hover ~ .outline .rect {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 0 0 10 40 10 40;
+  transition: 0.5s !important;
+}
+
+/* Efecto hover para el botón de logout */
+.button:hover ~ .outline .rect {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 0 75% 8% 12% 3% 2%;
+  transition: 0.5s !important;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .container {
+    padding: 0.3em;
+    flex-wrap: wrap;
+    gap: 0.5em;
+  }
+  
+  .btn {
+    padding: 0.4em 1em;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    height: auto;
+    min-height: 60px;
+  }
+  
+  .container {
+    flex-direction: column;
+    padding: 0.5em;
+  }
+  
+  .btn {
+    padding: 0.5em 1em;
+    text-align: center;
+  }
+}
