@@ -1,35 +1,83 @@
 {% extends "base/base.html" %}
+{% load static %}
+{% block extra_css %}
+    <link href="{% static 'css/table.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
-    <h2>Checador</h2>
-    <form method="post">
-        {% csrf_token %}
-        {% if session %}
-            <button type="submit" onclick="return confirm('¿Estás Seguro de registar la salida?');">Registrar salida</button>
-        {% else %}
-            <button type="submit">Registrar entrada</button>
-        {% endif %}
-    </form>
+    <div class="table-container">
+        <h2 class="section-title">Sistema de Checador</h2>
+        
+        <div class="action-buttons">
+            <form method="post">
+                {% csrf_token %}
+                {% if session %}
+                    <button type="submit" class="check-button checkout" onclick="return confirm('¿Estás seguro de registrar la salida?');">
+                        🚪 Registrar Salida
+                    </button>
+                {% else %}
+                    <button type="submit" class="check-button">
+                        🎯 Registrar Entrada
+                    </button>
+                {% endif %}
+            </form>
+        </div>
 
-    {% if checador %}
-        <h3>Historial de Checadas</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Fecha y Hora</th>
-                    <th>Tipo</th>
-                    <th>Duración</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for s in sessions %}
-                <tr>
-                    <td>{{ s.start_time }}</td>
-                    <td>{{ s.end_time|default:"-" }}</td>
-                    <td>{{ s.duration|default:"-" }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
+        {% if sessions %}
+            <h3 class="section-title">📊 Historial de Checadas</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>📅 Fecha y Hora de Entrada</th>
+                        <th>🏁 Fecha y Hora de Salida</th>
+                        <th>⏱️ Duración Total</th>
+                    </tr>
+                </thead>
+                <tbody class="data-table">
+                    {% for s in sessions %}
+                    <tr>
+                        <td class="date-time">
+                           <p> {% if s.start_time %}
+                                {{ s.start_time|date:"d/m/Y H:i" }}
+                            {% else %}
+                                -
+                            {% endif %}</p>
+                        </td>
+                        <td class="{% if s.end_time %}status-completed{% else %}status-active{% endif %}">
+                            {% if s.end_time %}
+                                {{ s.end_time|date:"d/m/Y H:i" }}
+                            {% else %}
+                                <span class="status-active">🟢 En curso...</span>
+                            {% endif %}
+                        </td>
+                        <td class="duration">
+                            {% if s.duration %}
+                                {{ s.duration }}
+                            {% else %}
+                                <span class="status-active">⏳ Activa</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="empty-message">
+                            <div class="empty-content">
+                                📝 No hay registros de checadas aún.
+                                <small>¡Haz clic en "Registrar Entrada" para comenzar!</small>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <h3 class="section-title">👋 ¡Bienvenido al sistema de checador!</h3>
+                <p>
+                    Aún no tienes registros de checadas. <br>
+                    Comienza registrando tu entrada para empezar a trackear tu tiempo.
+                </p>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

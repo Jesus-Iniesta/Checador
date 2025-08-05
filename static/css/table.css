@@ -1,0 +1,330 @@
+/* Container principal */
+.table-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--light-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    min-height: 400px;
+    text-decoration-color: var(--text-light);
+}
+
+/* Título de sección */
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    text-align: center;
+}
+
+/* Tabla principal */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background: var(--dark-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Encabezados de tabla */
+.data-table thead {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.data-table th {
+    padding: 1.2rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: white;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--border-color);
+    position: relative;
+}
+
+.data-table th:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Celdas de la tabla */
+.data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-light) !important;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    background: var(--dark-bg);
+}
+
+/* Filas de la tabla */
+.data-table tbody tr {
+    transition: var(--transition);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--dark-bg);
+}
+
+/* Estado vacío */
+.data-table tbody tr td[colspan] {
+    text-align: center;
+    padding: 0;
+    background: transparent !important;
+    border: none !important;
+}
+
+.empty-message {
+    text-align: center !important;
+    padding: 3rem 2rem !important;
+    background: var(--dark-bg) !important;
+    border: 2px solid var(--primary-color) !important;
+    border-radius: var(--border-radius) !important;
+    margin: 1rem !important;
+}
+
+.empty-content {
+    color: var(--text-light) !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+}
+
+.empty-content small {
+    display: block !important;
+    margin-top: 1rem !important;
+    color: var(--primary-color) ;
+    font-size: 1rem !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+}
+
+/* Estilos para diferentes tipos de datos */
+.data-table .date-time {
+    font-family: 'Courier New', monospace;
+    color: var(--text-light);
+    font-weight: 600;
+    background: rgba(88, 188, 130, 0.1);
+    border-radius: 4px;
+    padding: 0.5rem;
+}
+
+.data-table .status-active {
+    color: var(--success-color);
+    font-weight: 700;
+    text-shadow: 0 0 4px rgba(40, 167, 69, 0.5);
+}
+
+.data-table .status-completed {
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.data-table .duration {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1rem;
+    text-shadow: 0 0 4px rgba(88, 188, 130, 0.5);
+}
+
+/* Botones de acción */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.check-button {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: var(--border-radius);
+    color: white;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    min-width: 200px;
+}
+
+.check-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(88, 188, 130, 0.4);
+}
+
+.check-button:active {
+    transform: translateY(0);
+}
+
+.check-button.checkout {
+    background: linear-gradient(135deg, var(--error-color), #c82333);
+}
+
+.check-button.checkout:hover {
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .table-container {
+        padding: 1rem;
+        margin: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.3rem;
+    }
+    
+    .data-table {
+        font-size: 0.8rem;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 0.8rem 0.5rem;
+    }
+    
+    .check-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+        min-width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .table-container {
+        padding: 0.5rem;
+        margin: 0.5rem;
+    }
+    
+    .data-table {
+        font-size: 0.75rem;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 0.6rem 0.3rem;
+    }
+    
+    .section-title {
+        font-size: 1.1rem;
+    }
+    
+    .check-button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.table-container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Estados de carga */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--primary-color);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Estado vacío mejorado */
+.empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--dark-bg);
+    border-radius: var(--border-radius);
+    border: 2px solid var(--primary-color);
+    margin-top: 2rem;
+    box-shadow: 0 4px 20px rgba(88, 188, 130, 0.2);
+}
+
+.empty-state .section-title {
+    border: none;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.empty-state p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: center;
+    margin-top: 2rem;
+    font-weight: 500;
+}
+
+/* Indicadores de estado */
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status-indicator.active {
+    background: rgba(40, 167, 69, 0.2);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+.status-indicator.completed {
+    background: rgba(108, 117, 125, 0.2);
+    color: var(--text-muted);
+    border: 1px solid var(--text-muted);
+}
+
+/* Mejoras para iconos emoji */
+.data-table th {
+    white-space: nowrap;
+}
