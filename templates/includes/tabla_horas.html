@@ -1,0 +1,34 @@
+{% block content %}
+
+
+        {% if sessions %}
+            <h3 class="section-title">⏱️Total de horas</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Horas Totales</th>
+                    </tr>
+                </thead>
+                <tbody class="data-table">
+                    <tr>
+                        <td class="total-hours">
+                            {% if total_hours %}
+                                {{ total_hours }}
+                            {% else %}
+                                <span class="status-active">⏳ No hay registros</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+            </table>
+            {% else %}
+            <div class="empty-state">
+                <h3 class="section-title">👋 ¡Bienvenido al sistema de checador!</h3>
+                <p>
+                    Aún no tienes Horas acomuladas <br>
+                    Comienza registrando tu entrada para empezar a trackear tu tiempo.
+                </p>
+            </div>
+        {% endif %}
+
+
+{% endblock %}

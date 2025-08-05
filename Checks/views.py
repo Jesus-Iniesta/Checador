@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from django.contrib.auth import login
+from django.db.models.aggregates import Sum
+from django.db.models import F, ExpressionWrapper, DurationField
 from django.shortcuts import render, redirect
 from Checks.models import WorkSession
 from django.utils import timezone
@@ -45,8 +46,16 @@ def home(request):
         return redirect('Checks:home')
     #Historiall de sesiones
     sessions = WorkSession.objects.filter(user=request.user).order_by('-start_time')
-
+    total_duration = WorkSession.objects.filter(
+        user=request.user,
+        end_time__isnull=False
+    ).annotate(
+        session_duration=ExpressionWrapper(F('end_time') - F('start_time'), output_field=DurationField())
+    ).aggregate(
+        total_hours=Sum('session_duration')
+    )['total_hours']
     return render(request, 'Checador/check_tablero.html',{
         'session': session,
-        'sessions': sessions
+        'sessions': sessions,
+        'total_hours': total_duration
     })
